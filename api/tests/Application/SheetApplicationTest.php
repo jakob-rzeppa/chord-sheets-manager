@@ -386,5 +386,20 @@ class SheetApplicationTest extends WebTestCase
 
         $sheetInDatabase = $this->entityManager->getRepository(Sheet::class)->find(1);
         $this->assertEmpty($sheetInDatabase);
+
+        // Ensure that all entries in the join table are removed
+        $joinTableEntries = $this->entityManager->getConnection()->fetchAllAssociative('SELECT * FROM sheet_tag WHERE sheet_id = 1');
+        $this->assertEmpty($joinTableEntries);
+    }
+
+    public function testDeleteNotFound(): void
+    {
+        $this->client->request('DELETE', '/sheets/999');
+
+        $this->assertResponseStatusCodeSame(404);
+        $responseData = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->assertArrayHasKey('message', $responseData);
+        $this->assertEquals('Sheet with id 999 not found.', $responseData['message']);
     }
 }
