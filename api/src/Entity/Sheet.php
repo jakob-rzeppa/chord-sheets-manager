@@ -33,9 +33,10 @@ class Sheet
     private ?string $content = "";
 
     /**
+     * Many Sheets have Many Tags.
      * @var Collection<int, Tag>
      */
-    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'tabs')]
+    #[ORM\ManyToMany(targetEntity: Tag::class)]
     private Collection $tags;
 
     #[ORM\ManyToOne(inversedBy: 'tabs')]
