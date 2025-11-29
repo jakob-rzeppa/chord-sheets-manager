@@ -138,6 +138,9 @@ class SheetHandler
             throw new NotFoundHttpException("Sheet with id $id not found.");
         }
 
+        // remove all tag associations
+        $sheet->getTags()->clear();
+
         $this->entityManager->remove($sheet);
         $this->entityManager->flush();
     }
@@ -148,6 +151,21 @@ class SheetHandler
 
         foreach ($sheets as $sheet) {
             $sheet->setArtist(null);
+        }
+
+        $this->entityManager->flush();
+    }
+
+    public function removeTagFromAllSheets(int $tagId): void
+    {
+        $sheets = $this->sheetRepository->findAll();
+
+        foreach ($sheets as $sheet) {
+            foreach ($sheet->getTags() as $tag) {
+                if ($tag->getId() === $tagId) {
+                    $sheet->getTags()->removeElement($tag);
+                }
+            }
         }
 
         $this->entityManager->flush();

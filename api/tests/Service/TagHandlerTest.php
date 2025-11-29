@@ -4,7 +4,9 @@ namespace App\Tests\Service;
 
 use App\Dto\Request\UpdateTagRequestDto;
 use App\Entity\Tag;
+use App\Repository\SheetRepository;
 use App\Repository\TagRepository;
+use App\Service\SheetHandler;
 use App\Service\TagHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -16,6 +18,7 @@ class TagHandlerTest extends KernelTestCase
 {
     private Container $container;
     private MockObject&TagRepository $tagRepositoryMock;
+    private MockObject&SheetHandler $sheetHandlerMock;
     private MockObject&EntityManagerInterface $entityManagerMock;
 
     protected function setUp(): void
@@ -28,6 +31,9 @@ class TagHandlerTest extends KernelTestCase
         // automatically resets and sets up mocks
         $this->tagRepositoryMock = $this->createMock(TagRepository::class);
         $this->container->set('App\Repository\TagRepository', $this->tagRepositoryMock);
+
+        $this->sheetHandlerMock = $this->createMock(SheetHandler::class);
+        $this->container->set('App\Service\SheetHandler', $this->sheetHandlerMock);
 
         $this->entityManagerMock = $this->createMock(EntityManagerInterface::class);
         $this->container->set('doctrine.orm.entity_manager', $this->entityManagerMock);
@@ -99,6 +105,10 @@ class TagHandlerTest extends KernelTestCase
             $tag->setName('Tag to Delete');
             return $tag;
         });
+
+        $this->sheetHandlerMock->expects($this->once())
+            ->method('removeTagFromAllSheets')
+            ->with(1);
         $this->entityManagerMock->expects($this->once())->method('remove');
         $this->entityManagerMock->expects($this->once())->method('flush');
 
@@ -109,6 +119,7 @@ class TagHandlerTest extends KernelTestCase
     public function testDeleteTagNotFound(): void
     {
         $this->tagRepositoryMock->method('find')->willReturn(null);
+        $this->sheetHandlerMock->expects($this->never())->method('removeTagFromAllSheets');
         $this->entityManagerMock->expects($this->never())->method('remove');
         $this->entityManagerMock->expects($this->never())->method('flush');
 

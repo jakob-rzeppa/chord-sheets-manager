@@ -13,6 +13,7 @@ class TagHandler
     public function __construct(
         private TagRepository $tagRepository,
         private EntityManagerInterface $entityManager,
+        private SheetHandler $sheetHandler
     ) {}
 
     public function createTag(string $name)
@@ -48,6 +49,8 @@ class TagHandler
         if ($tag === null) {
             throw new NotFoundHttpException('Tag with id ' . $id . ' not found.');
         }
+
+        $this->sheetHandler->removeTagFromAllSheets($id);
 
         $this->entityManager->remove($tag);
         $this->entityManager->flush();
