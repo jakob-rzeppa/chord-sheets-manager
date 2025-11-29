@@ -30,7 +30,7 @@ class TagHandler
     {
         $tag = $this->tagRepository->find($id);
         if ($tag === null) {
-            throw new NotFoundHttpException('Tag not found');
+            throw new NotFoundHttpException('Tag with id ' . $id . ' not found.');
         }
 
         if ($updateTagRequestDto->name !== null) {
@@ -46,7 +46,7 @@ class TagHandler
     {
         $tag = $this->tagRepository->find($id);
         if ($tag === null) {
-            throw new NotFoundHttpException('Tag not found');
+            throw new NotFoundHttpException('Tag with id ' . $id . ' not found.');
         }
 
         $this->entityManager->remove($tag);

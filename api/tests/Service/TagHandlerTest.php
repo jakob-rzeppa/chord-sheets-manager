@@ -70,7 +70,7 @@ class TagHandlerTest extends KernelTestCase
         $tagHandler = $this->container->get(TagHandler::class);
 
         $this->expectException(NotFoundHttpException::class);
-        $this->expectExceptionMessage('Tag not found');
+        $this->expectExceptionMessage('Tag with id 999 not found.');
 
         $tagHandler->updateTag(999, new UpdateTagRequestDto(name: 'Updated Tag'));
     }
@@ -115,7 +115,7 @@ class TagHandlerTest extends KernelTestCase
         $tagHandler = $this->container->get(TagHandler::class);
 
         $this->expectException(NotFoundHttpException::class);
-        $this->expectExceptionMessage('Tag not found');
+        $this->expectExceptionMessage('Tag with id 999 not found.');
 
         $tagHandler->deleteTag(999);
     }
