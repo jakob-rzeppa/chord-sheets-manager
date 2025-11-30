@@ -9,6 +9,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Guide Getting-Started', link: '/guide/getting-started' },
+      { text: 'Docker Deployment', link: '/guide/docker-deployment' },
       { text: 'Api Overview', link: '/api/overview' }
     ],
 
@@ -17,6 +18,7 @@ export default defineConfig({
         text: 'Examples',
         items: [
           { text: 'Guide Getting-Started', link: '/guide/getting-started' },
+          { text: 'Docker Deployment', link: '/guide/docker-deployment' },
           { text: 'Api Overview', link: '/api/overview' },
           { text: 'Sheets Api', link: '/api/sheet' },
           { text: 'Artists Api', link: '/api/artist' },
