@@ -159,12 +159,11 @@ class SheetHandler
     public function removeTagFromAllSheets(int $tagId): void
     {
         $sheets = $this->sheetRepository->findAll();
+        $tagToRemove = $this->tagRepository->find($tagId);
 
         foreach ($sheets as $sheet) {
-            foreach ($sheet->getTags() as $tag) {
-                if ($tag->getId() === $tagId) {
-                    $sheet->getTags()->removeElement($tag);
-                }
+            if ($sheet->getTags()->contains($tagToRemove)) {
+                $sheet->removeTag($tagToRemove);
             }
         }
 
