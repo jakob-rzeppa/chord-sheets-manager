@@ -1,4 +1,19 @@
 services:
+  database:
+    image: 'postgres:alpine'
+    env_file:
+      - .env.local
+    ports:
+      - '5432:5432'
+    networks:
+      - chord-sheets-network
+    healthcheck:
+      # pg_isready checks if the database is ready to accept connections
+      test: [ "CMD-SHELL", "pg_isready -U main" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   api:
     build:
       context: ./api
@@ -8,6 +23,13 @@ services:
     environment:
       APP_ENV: prod
       APP_DEBUG: 0
+    env_file:
+      - .env.local
+    networks:
+      - chord-sheets-network
+    depends_on:
+      database:
+        condition: service_healthy
 
   nginx:
     image: nginx:stable-alpine
@@ -15,11 +37,19 @@ services:
       - "8000:80"
     volumes:
       - ./api:/var/www/html
-      - ./api/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - api
+    networks:
+      - chord-sheets-network
 
   web:
     build: ./web/
     ports:
       - "8080:8080"
+    networks:
+      - chord-sheets-network
+
+networks:
+  chord-sheets-network:
+    driver: bridge

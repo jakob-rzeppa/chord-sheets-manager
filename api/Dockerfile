@@ -18,7 +18,12 @@ ENV APP_ENV=prod
 
 RUN composer install --no-scripts --no-dev --optimize-autoloader
 
-# Permissions (optional)
+# Permissions
 RUN chown -R www-data:www-data var
 
+# Copy and set executable permissions for docker database setup script
+COPY docker-db-setup.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-db-setup.sh
+
+ENTRYPOINT ["docker-db-setup.sh"]
 CMD ["php-fpm"]
