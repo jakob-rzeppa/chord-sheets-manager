@@ -31,7 +31,7 @@ class ArtistHandler
     {
         $artist = $this->artistRepository->find($id);
         if ($artist === null) {
-            throw new NotFoundHttpException('Artist not found');
+            throw new NotFoundHttpException('Artist with id ' . $id . ' not found.');
         }
 
         if ($updateArtistRequestDto->name !== null) {
@@ -47,7 +47,7 @@ class ArtistHandler
     {
         $artist = $this->artistRepository->find($id);
         if ($artist === null) {
-            throw new NotFoundHttpException('Artist not found');
+            throw new NotFoundHttpException('Artist with id ' . $id . ' not found.');
         }
 
         $this->sheetHandler->deleteArtistFromAllSheets($artist->getId());

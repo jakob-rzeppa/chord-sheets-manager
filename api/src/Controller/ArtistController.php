@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\ArtistRepository;
 use App\Service\ArtistHandler;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 #[Route('/artists')]
 final class ArtistController extends AbstractController
@@ -32,7 +33,7 @@ final class ArtistController extends AbstractController
         $artist = $artistRepository->find($id);
 
         if (null === $artist) {
-            throw $this->createNotFoundException();
+            throw new NotFoundHttpException('Artist with id ' . $id . ' not found.');
         }
 
         return $this->json([

@@ -75,7 +75,7 @@ class ArtistHandlerTest extends KernelTestCase
         $artistHandler = $this->container->get(ArtistHandler::class);
 
         $this->expectException(NotFoundHttpException::class);
-        $this->expectExceptionMessage('Artist not found');
+        $this->expectExceptionMessage('Artist with id 999 not found.');
 
         $artistHandler->updateArtist(999, new UpdateArtistRequestDto(name: 'Updated Artist'));
     }
@@ -126,7 +126,7 @@ class ArtistHandlerTest extends KernelTestCase
         $artistHandler = $this->container->get(ArtistHandler::class);
 
         $this->expectException(NotFoundHttpException::class);
-        $this->expectExceptionMessage('Artist not found');
+        $this->expectExceptionMessage('Artist with id 999 not found.');
 
         $artistHandler->deleteArtist(999);
     }
