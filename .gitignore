@@ -1,2 +1,5 @@
 # macOS system file (used to store custom attributes of a folder such as icon positions)
 .DS_Store
+
+# Local environment files
+.env.local
