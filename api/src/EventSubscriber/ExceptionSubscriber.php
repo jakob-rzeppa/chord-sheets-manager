@@ -11,13 +11,13 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private LoggerInterface $logger) {}
+    public function __construct(private ?LoggerInterface $logger = null) {}
 
     public function onKernelException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
 
-        $this->logger->error('An exception occurred: ' . $exception->getMessage(), [
+        $this->logger?->error('An exception occurred: ' . $exception->getMessage(), [
             'exception' => $exception,
         ]);
 
