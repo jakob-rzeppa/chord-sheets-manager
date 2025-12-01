@@ -1,4 +1,4 @@
-name: PHP Composer
+name: API Test Suite
 
 on:
   push:
