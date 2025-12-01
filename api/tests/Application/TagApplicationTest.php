@@ -39,7 +39,7 @@ class TagApplicationTest extends WebTestCase
 
     public function testGetAll(): void
     {
-        $this->client->request('GET', '/tags');
+        $this->client->request('GET', 'api/v1/tags');
 
         $this->assertResponseIsSuccessful();
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
@@ -54,7 +54,7 @@ class TagApplicationTest extends WebTestCase
 
     public function testGetById(): void
     {
-        $this->client->request('GET', '/tags/1');
+        $this->client->request('GET', 'api/v1/tags/1');
 
         $this->assertResponseIsSuccessful();
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
@@ -66,7 +66,7 @@ class TagApplicationTest extends WebTestCase
 
     public function testGetByIdNotFound(): void
     {
-        $this->client->request('GET', '/tags/999');
+        $this->client->request('GET', 'api/v1/tags/999');
 
         $this->assertResponseStatusCodeSame(404);
     }
@@ -79,7 +79,7 @@ class TagApplicationTest extends WebTestCase
 
         $this->client->request(
             'POST',
-            '/tags',
+            'api/v1/tags',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -108,7 +108,7 @@ class TagApplicationTest extends WebTestCase
 
         $this->client->request(
             'POST',
-            '/tags',
+            'api/v1/tags',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -130,7 +130,7 @@ class TagApplicationTest extends WebTestCase
 
         $this->client->request(
             'PUT',
-            '/tags/1',
+            'api/v1/tags/1',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -159,7 +159,7 @@ class TagApplicationTest extends WebTestCase
 
         $this->client->request(
             'PUT',
-            '/tags/999',
+            'api/v1/tags/999',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -181,7 +181,7 @@ class TagApplicationTest extends WebTestCase
 
         $this->client->request(
             'PUT',
-            '/tags/1',
+            'api/v1/tags/1',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -210,7 +210,7 @@ class TagApplicationTest extends WebTestCase
 
         $this->client->request(
             'PUT',
-            '/tags/1',
+            'api/v1/tags/1',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -226,7 +226,7 @@ class TagApplicationTest extends WebTestCase
 
     public function testDelete(): void
     {
-        $this->client->request('DELETE', '/tags/1');
+        $this->client->request('DELETE', 'api/v1/tags/1');
 
         $this->assertResponseIsSuccessful();
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
@@ -261,7 +261,7 @@ class TagApplicationTest extends WebTestCase
 
     public function testDeleteNotFound(): void
     {
-        $this->client->request('DELETE', '/tags/999');
+        $this->client->request('DELETE', 'api/v1/tags/999');
 
         $this->assertResponseStatusCodeSame(404);
         $responseData = json_decode($this->client->getResponse()->getContent(), true);

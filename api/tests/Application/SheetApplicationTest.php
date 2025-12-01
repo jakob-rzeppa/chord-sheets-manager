@@ -38,7 +38,7 @@ class SheetApplicationTest extends WebTestCase
 
     public function testGetAll(): void
     {
-        $this->client->request('GET', '/sheets');
+        $this->client->request('GET', 'api/v1/sheets');
 
         $this->assertResponseIsSuccessful();
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
@@ -62,7 +62,7 @@ class SheetApplicationTest extends WebTestCase
 
     public function testGetById(): void
     {
-        $this->client->request('GET', '/sheets/1');
+        $this->client->request('GET', 'api/v1/sheets/1');
 
         $this->assertResponseIsSuccessful();
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
@@ -83,7 +83,7 @@ class SheetApplicationTest extends WebTestCase
 
     public function testGetByIdNotFound(): void
     {
-        $this->client->request('GET', '/sheets/999');
+        $this->client->request('GET', 'api/v1/sheets/999');
 
         $this->assertResponseStatusCodeSame(404);
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
@@ -105,7 +105,7 @@ class SheetApplicationTest extends WebTestCase
 
         $this->client->request(
             'POST',
-            '/sheets',
+            'api/v1/sheets',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -148,7 +148,7 @@ class SheetApplicationTest extends WebTestCase
 
         $this->client->request(
             'POST',
-            '/sheets',
+            'api/v1/sheets',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -179,7 +179,7 @@ class SheetApplicationTest extends WebTestCase
 
         $this->client->request(
             'POST',
-            '/sheets',
+            'api/v1/sheets',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -222,7 +222,7 @@ class SheetApplicationTest extends WebTestCase
 
         $this->client->request(
             'PUT',
-            '/sheets/1',
+            'api/v1/sheets/1',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -265,7 +265,7 @@ class SheetApplicationTest extends WebTestCase
 
         $this->client->request(
             'PUT',
-            '/sheets/999',
+            'api/v1/sheets/999',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -292,7 +292,7 @@ class SheetApplicationTest extends WebTestCase
 
         $this->client->request(
             'PUT',
-            '/sheets/1',
+            'api/v1/sheets/1',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -326,7 +326,7 @@ class SheetApplicationTest extends WebTestCase
 
         $this->client->request(
             'PUT',
-            '/sheets/1',
+            'api/v1/sheets/1',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -359,7 +359,7 @@ class SheetApplicationTest extends WebTestCase
 
         $this->client->request(
             'PUT',
-            '/sheets/1',
+            'api/v1/sheets/1',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -376,7 +376,7 @@ class SheetApplicationTest extends WebTestCase
 
     public function testDelete(): void
     {
-        $this->client->request('DELETE', '/sheets/1');
+        $this->client->request('DELETE', 'api/v1/sheets/1');
 
         $this->assertResponseIsSuccessful();
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
@@ -394,7 +394,7 @@ class SheetApplicationTest extends WebTestCase
 
     public function testDeleteNotFound(): void
     {
-        $this->client->request('DELETE', '/sheets/999');
+        $this->client->request('DELETE', 'api/v1/sheets/999');
 
         $this->assertResponseStatusCodeSame(404);
         $responseData = json_decode($this->client->getResponse()->getContent(), true);

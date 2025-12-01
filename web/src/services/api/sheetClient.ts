@@ -16,7 +16,7 @@ export async function fetchAllSheets(options: { force?: boolean } = {}): Promise
     await callApi<SheetListItemDto[]>({
         loadingRef: toRef(sheetStore, 'loading'),
         errorRef: toRef(sheetStore, 'error'),
-        apiCall: () => api.get('/sheets'),
+        apiCall: () => api.get('v1/sheets'),
         onSuccess: ({ data }) => {
             if (!data.payload) {
                 sheetStore.error = 'Request content is empty';
@@ -47,7 +47,7 @@ export async function fetchSheet(id: string, options: { force?: boolean } = {}):
     await callApi<SheetDto>({
         loadingRef: toRef(sheetStore, 'loading'),
         errorRef: toRef(sheetStore, 'error'),
-        apiCall: () => api.get(`/sheets/${id}`),
+        apiCall: () => api.get(`v1/sheets/${id}`),
         onSuccess: ({ data }) => {
             if (!data.payload) {
                 sheetStore.error = 'Request payload is empty';
@@ -86,7 +86,7 @@ export async function createSheet(sheet: Omit<Sheet, 'id'>): Promise<void> {
     await callApi<SheetDto>({
         loadingRef: toRef(sheetStore, 'loading'),
         errorRef: toRef(sheetStore, 'error'),
-        apiCall: () => api.post('/sheets', payload),
+        apiCall: () => api.post('v1/sheets', payload),
         onSuccess: ({ data }) => {
             if (!data.payload) {
                 sheetStore.error = 'Request payload is empty';
@@ -178,7 +178,7 @@ export async function updateSheet(id: string, fieldsToUpdate: Partial<Omit<Sheet
     await callApi<SheetDto>({
         loadingRef: toRef(sheetStore, 'loading'),
         errorRef: toRef(sheetStore, 'error'),
-        apiCall: () => api.put(`/sheets/${id}`, payload),
+        apiCall: () => api.put(`v1/sheets/${id}`, payload),
         onSuccess: ({ data }) => {
             if (!data.payload) {
                 sheetStore.error = 'Request payload is empty';
@@ -216,7 +216,7 @@ export async function deleteSheet(id: string): Promise<void> {
     await callApi<DeleteDto>({
         loadingRef: toRef(sheetStore, 'loading'),
         errorRef: toRef(sheetStore, 'error'),
-        apiCall: () => api.delete(`/sheets/${id}`),
+        apiCall: () => api.delete(`v1/sheets/${id}`),
         onSuccess: () => {
             delete sheetStore.detailedSheets[id];
 

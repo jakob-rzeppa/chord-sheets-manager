@@ -39,7 +39,7 @@ class ArtistApplicationTest extends WebTestCase
 
     public function testGetAll(): void
     {
-        $this->client->request('GET', '/artists');
+        $this->client->request('GET', '/api/v1/artists');
 
         $this->assertResponseIsSuccessful();
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
@@ -50,7 +50,7 @@ class ArtistApplicationTest extends WebTestCase
 
     public function testGetById(): void
     {
-        $this->client->request('GET', '/artists/1');
+        $this->client->request('GET', '/api/v1/artists/1');
 
         $this->assertResponseIsSuccessful();
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
@@ -60,7 +60,7 @@ class ArtistApplicationTest extends WebTestCase
 
     public function testGetByIdNotFound(): void
     {
-        $this->client->request('GET', '/artists/999');
+        $this->client->request('GET', '/api/v1/artists/999');
 
         $this->assertResponseStatusCodeSame(404);
 
@@ -70,7 +70,7 @@ class ArtistApplicationTest extends WebTestCase
 
     public function testCreateArtist(): void
     {
-        $this->client->request('POST', '/artists', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([
+        $this->client->request('POST', '/api/v1/artists', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([
             'name' => 'Adele',
         ]));
 
@@ -87,7 +87,7 @@ class ArtistApplicationTest extends WebTestCase
 
     public function testCreateArtistValidationError(): void
     {
-        $this->client->request('POST', '/artists', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([
+        $this->client->request('POST', '/api/v1/artists', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([
             'name' => '',
         ]));
 
@@ -99,7 +99,7 @@ class ArtistApplicationTest extends WebTestCase
 
     public function testUpdateArtist(): void
     {
-        $this->client->request('PUT', '/artists/1', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([
+        $this->client->request('PUT', '/api/v1/artists/1', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([
             'name' => 'Ed Sheeran Updated',
         ]));
 
@@ -115,7 +115,7 @@ class ArtistApplicationTest extends WebTestCase
 
     public function testUpdateArtistNotFound(): void
     {
-        $this->client->request('PUT', '/artists/999', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([
+        $this->client->request('PUT', '/api/v1/artists/999', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([
             'name' => 'Non Existent Artist',
         ]));
 
@@ -127,7 +127,7 @@ class ArtistApplicationTest extends WebTestCase
 
     public function testUpdateArtistValidationError(): void
     {
-        $this->client->request('PUT', '/artists/1', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([
+        $this->client->request('PUT', '/api/v1/artists/1', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([
             'name' => '',
         ]));
 
@@ -139,7 +139,7 @@ class ArtistApplicationTest extends WebTestCase
 
     public function testDeleteArtist(): void
     {
-        $this->client->request('DELETE', '/artists/1');
+        $this->client->request('DELETE', '/api/v1/artists/1');
 
         $this->assertResponseIsSuccessful();
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
@@ -152,7 +152,7 @@ class ArtistApplicationTest extends WebTestCase
 
     public function testDeleteArtistNotFound(): void
     {
-        $this->client->request('DELETE', '/artists/999');
+        $this->client->request('DELETE', '/api/v1/artists/999');
 
         $this->assertResponseStatusCodeSame(404);
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
