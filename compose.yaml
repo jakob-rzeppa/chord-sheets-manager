@@ -3,8 +3,6 @@ services:
     image: 'postgres:alpine'
     env_file:
       - .env.local
-    ports:
-      - '5432:5432'
     networks:
       - chord-sheets-network
     healthcheck:
@@ -40,13 +38,15 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - api
+      - web
     networks:
       - chord-sheets-network
 
   web:
-    build: ./web/
-    ports:
-      - "8080:8080"
+    build:
+      context: ./web/
+      args:
+        WEB_SERVER_URL: http://localhost:8000
     networks:
       - chord-sheets-network
 
