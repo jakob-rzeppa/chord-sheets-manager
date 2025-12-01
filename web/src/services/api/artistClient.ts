@@ -14,7 +14,7 @@ export async function fetchAllArtists(options: { force?: boolean } = {}): Promis
     await callApi<ArtistDto[]>({
         loadingRef: toRef(artistStore, 'loading'),
         errorRef: toRef(artistStore, 'error'),
-        apiCall: () => api.get('/artists'),
+        apiCall: () => api.get('v1/artists'),
         onSuccess: ({ data }) => {
             if (!data.payload) {
                 artistStore.error = 'Request content is empty';
@@ -35,7 +35,7 @@ export async function createArtist(artist: Partial<Artist>): Promise<void> {
     await callApi<ArtistDto>({
         loadingRef: toRef(artistStore, 'loading'),
         errorRef: toRef(artistStore, 'error'),
-        apiCall: () => api.post('/artists', artist),
+        apiCall: () => api.post('v1/artists', artist),
         onSuccess: ({ data }) => {
             if (!data.payload) {
                 artistStore.error = 'Request content is empty';
@@ -58,7 +58,7 @@ export async function updateArtist(artistId: number, artist: Partial<Omit<Artist
     await callApi<ArtistDto>({
         loadingRef: toRef(artistStore, 'loading'),
         errorRef: toRef(artistStore, 'error'),
-        apiCall: () => api.put(`/artists/${artistId}`, payload),
+        apiCall: () => api.put(`v1/artists/${artistId}`, payload),
         onSuccess: ({ data }) => {
             if (!data.payload) {
                 artistStore.error = 'Response content is empty';
@@ -94,7 +94,7 @@ export async function deleteArtist(artistId: number): Promise<void> {
     await callApi<void>({
         loadingRef: toRef(artistStore, 'loading'),
         errorRef: toRef(artistStore, 'error'),
-        apiCall: () => api.delete(`/artists/${artistId}`),
+        apiCall: () => api.delete(`v1/artists/${artistId}`),
         onSuccess: () => {
             artistStore.artists = artistStore.artists.filter((a) => a.id !== artistId);
 

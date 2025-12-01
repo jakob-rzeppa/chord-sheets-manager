@@ -6,6 +6,10 @@ RUN npm install -g http-server
 # make the 'app' folder the current working directory
 WORKDIR /app
 
+# Accept build argument for API endpoint (must be before COPY to use in build)
+ARG WEB_SERVER_URL
+ENV VITE_API_ENDPOINT="${WEB_SERVER_URL}/api"
+
 # copy both 'package.json' and 'package-lock.json' (if available)
 COPY package*.json ./
 

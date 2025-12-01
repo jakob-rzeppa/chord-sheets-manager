@@ -17,7 +17,7 @@ export async function fetchAllTags(options: { force?: boolean } = {}): Promise<v
     await callApi<TagDto[]>({
         loadingRef: toRef(tagStore, 'loading'),
         errorRef: toRef(tagStore, 'error'),
-        apiCall: () => api.get('/tags'),
+        apiCall: () => api.get('v1/tags'),
         onSuccess: ({ data }) => {
             if (!data.payload) {
                 tagStore.error = 'Request content is empty';
@@ -44,7 +44,7 @@ export async function createTag(tag: Omit<Tag, 'id'>): Promise<void> {
     await callApi<TagDto>({
         loadingRef: toRef(tagStore, 'loading'),
         errorRef: toRef(tagStore, 'error'),
-        apiCall: () => api.post('/tags', payload),
+        apiCall: () => api.post('v1/tags', payload),
         onSuccess: ({ data }) => {
             if (!data.payload) {
                 tagStore.error = 'Request content is empty';
@@ -72,7 +72,7 @@ export async function updateTag(tagId: number, tag: Partial<Omit<Tag, 'id'>>): P
     await callApi<TagDto>({
         loadingRef: toRef(tagStore, 'loading'),
         errorRef: toRef(tagStore, 'error'),
-        apiCall: () => api.put(`/tags/${tagId}`, payload),
+        apiCall: () => api.put(`v1/tags/${tagId}`, payload),
         onSuccess: ({ data }) => {
             if (!data.payload) {
                 tagStore.error = 'Response content is empty';
@@ -113,7 +113,7 @@ export async function deleteTag(tagId: number): Promise<void> {
     await callApi<void>({
         loadingRef: toRef(tagStore, 'loading'),
         errorRef: toRef(tagStore, 'error'),
-        apiCall: () => api.delete(`/tags/${tagId}`),
+        apiCall: () => api.delete(`v1/tags/${tagId}`),
         onSuccess: () => {
             tagStore.tags = tagStore.tags.filter((t) => t.id !== tagId);
 
