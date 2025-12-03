@@ -28,19 +28,12 @@ services:
     build:
       context: .
       dockerfile: ./nginx/Dockerfile
+      args:
+        - WEB_SERVER_URL: http://localhost
     ports:
       - "8000:80"
     depends_on:
       - api
-      - web
-    networks:
-      - chord-sheets-network
-
-  web:
-    build:
-      context: ./web/
-      args:
-        WEB_SERVER_URL: http://localhost:8000
     networks:
       - chord-sheets-network
 
