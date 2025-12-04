@@ -24,7 +24,7 @@ php bin/console doctrine:schema:create --no-interaction || echo "Schema already 
 echo "Database setup complete!"
 
 # Ensure cache directory has correct permissions
-chown -R www-data:www-data /var/www/html/var
+chown -R www-data:www-data /etc/nginx/api/html/var
 
 # Execute the CMD from Dockerfile
 exec "$@"

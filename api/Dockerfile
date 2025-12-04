@@ -8,15 +8,19 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www/html
+WORKDIR /etc/nginx/api/html
 
-COPY . .
+# Copy Composer files
+COPY composer.json composer.lock ./
 
 # Set environment for Composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV APP_ENV=prod
 
 RUN composer install --no-scripts --no-dev --optimize-autoloader
+
+# Copy the rest of the application code
+COPY . .
 
 # Copy and set executable permissions for docker database setup script
 COPY docker-entrypoint.sh /usr/local/bin/
