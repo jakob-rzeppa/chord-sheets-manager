@@ -28,8 +28,8 @@ services:
     build:
       context: .
       dockerfile: ./nginx/Dockerfile
-      args:
-        - WEB_SERVER_URL: http://localhost
+    env_file:
+      - .env.local
     ports:
       - "8000:80"
     depends_on:
