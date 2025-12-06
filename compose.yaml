@@ -3,6 +3,9 @@ services:
     image: 'postgres:alpine'
     env_file:
       - .env.local
+    volumes:
+      # Persist Postgres data on the host machine
+      - /var/lib/chord-sheets-manager/postgres:/var/lib/postgresql/data
     networks:
       - chord-sheets-network
     healthcheck:
