@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import type { RouterLinkProps } from 'vue-router';
 import ContentWrapper from '../components/ContentWrapper.vue';
 import SearchIcon from '../components/icons/SearchIcon.vue';
@@ -8,13 +9,16 @@ import FilterIcon from '../components/icons/FilterIcon.vue';
 const props = defineProps<{
     createRoute?: RouterLinkProps['to'];
 }>();
+
+// State to manage the visibility of the filters section
+const filtersOpen = ref(false);
 </script>
 
 <template>
     <ContentWrapper>
         <div class="px-8 md:px-14 pt-8 pb-4">
             <h1
-                class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+                class="text-5xl font-bold text-center mb-8 bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent"
             >
                 <slot name="title" />
             </h1>
@@ -40,11 +44,11 @@ const props = defineProps<{
 
                 <div
                     v-if="$slots.filters"
-                    tabindex="0"
                     class="collapse collapse-arrow bg-base-200 rounded-box shadow-md"
+                    :class="{ 'collapse-open': filtersOpen, 'collapse-close': !filtersOpen }"
                 >
-                    <input type="checkbox" />
-                    <div class="collapse-title text-lg font-semibold flex items-center gap-2">
+                    <input type="checkbox" v-model="filtersOpen" class="peer" />
+                    <div class="collapse-title text-lg font-semibold flex items-center gap-2 cursor-pointer">
                         <FilterIcon />
                         Advanced Filters
                     </div>
