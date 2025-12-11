@@ -12,6 +12,7 @@ import CreateArtistModal from '@/components/CreateArtistModal.vue';
 import PlusIcon from '@/components/icons/PlusIcon.vue';
 import BaseEditView from '../BaseEditView.vue';
 import { fetchSheet, updateSheet } from '@/services/api/sheetClient';
+import CreateTagModal from '@/components/CreateTagModal.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -97,7 +98,17 @@ const handleSave = async () => {
                 </div>
 
                 <!-- Tags -->
-                <SelectTags v-model="localSheet.tags" />
+                <div>
+                    <SelectTags v-model="localSheet.tags" />
+
+                    <button
+                        class="btn btn-sm btn-outline btn-secondary w-max mt-2"
+                        @click="modalStore.openModal(CreateTagModal)"
+                    >
+                        <PlusIcon />
+                        Create new Tag
+                    </button>
+                </div>
 
                 <!-- Capo -->
                 <div>
