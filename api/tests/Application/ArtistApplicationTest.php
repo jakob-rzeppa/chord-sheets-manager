@@ -85,6 +85,18 @@ class ArtistApplicationTest extends WebTestCase
         $this->assertEquals('Adele', $newArtist->getName());
     }
 
+    public function testCreateArtistDuplicateName(): void
+    {
+        $this->client->request('POST', '/api/v1/artists', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([
+            'name' => 'Ed Sheeran',
+        ]));
+
+        $this->assertResponseIsSuccessful();
+        $responseData = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->assertEquals('Artist with name "Ed Sheeran" already exists.', $responseData['message']);
+    }
+
     public function testCreateArtistValidationError(): void
     {
         $this->client->request('POST', '/api/v1/artists', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([

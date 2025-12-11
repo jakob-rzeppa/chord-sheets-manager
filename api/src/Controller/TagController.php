@@ -51,6 +51,13 @@ final class TagController extends AbstractController
     ): JsonResponse {
         $tag = $tagHandler->createTag($createTagRequestDto->name);
 
+        # Even though the tag already exists, we return a 200 status code to indicate the request was handled successfully. It is not an problem to create a tag that already exists. This is to avoid unnecessary complication on the client side.
+        if ($tag === null) {
+            return $this->json([
+                'message' => 'Tag with name "' . $createTagRequestDto->name . '" already exists.'
+            ], 200);
+        }
+
         return $this->json([
             'payload' => TagDto::fromTag($tag)->toArray(),
             'message' => 'Tag created successfully'

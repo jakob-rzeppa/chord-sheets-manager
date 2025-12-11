@@ -46,6 +46,13 @@ final class ArtistController extends AbstractController
     {
         $artist = $artistHandler->createArtist($createArtistRequestDto->name);
 
+        # Even though the artist already exists, we return a 200 status code to indicate the request was handled successfully. It is not an problem to create an artist that already exists. This is to avoid unnecessary complication on the client side.
+        if ($artist === null) {
+            return $this->json([
+                'message' => 'Artist with name "' . $createArtistRequestDto->name . '" already exists.'
+            ], 200);
+        }
+
         return $this->json([
             'payload' => ArtistDto::fromArtist($artist)->toArray(),
             'message' => 'Artist created successfully'

@@ -100,6 +100,24 @@ class TagApplicationTest extends WebTestCase
         $this->assertEquals('Rock', $tagInDatabase->getName());
     }
 
+    public function testCreateDuplicateName(): void
+    {
+        $this->client->request(
+            'POST',
+            'api/v1/tags',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode(['name' => 'Pop'])
+        );
+
+        $this->assertResponseIsSuccessful();
+        $responseData = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->assertArrayHasKey('message', $responseData);
+        $this->assertEquals('Tag with name "Pop" already exists.', $responseData['message']);
+    }
+
     public function testCreateValidationError(): void
     {
         $invalidTagData = [

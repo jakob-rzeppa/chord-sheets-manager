@@ -16,8 +16,16 @@ class TagHandler
         private SheetHandler $sheetHandler
     ) {}
 
+    /**
+     * @return Tag|null Tag if created, null if a tag with the same name already exists.
+     */
     public function createTag(string $name)
     {
+        $existingTag = $this->tagRepository->findOneBy(['name' => $name]);
+        if ($existingTag !== null) {
+            return null;
+        }
+
         $tag = new Tag();
         $tag->setName($name);
 

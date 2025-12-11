@@ -41,6 +41,7 @@ class TagHandlerTest extends KernelTestCase
     // === Create Tag Tests ===
     public function testCreateTag(): void
     {
+        $this->tagRepositoryMock->method('findOneBy')->willReturn(null);
         $this->entityManagerMock->expects($this->once())->method('persist');
         $this->entityManagerMock->expects($this->once())->method('flush');
 
@@ -49,6 +50,23 @@ class TagHandlerTest extends KernelTestCase
 
         $this->assertNotNull($tag);
         $this->assertEquals('New Tag', $tag->getName());
+    }
+
+    public function testCreateArtistDuplicateName(): void
+    {
+        $this->tagRepositoryMock->method('findOneBy')->willReturnCallback(function () {
+            $tag = new Tag();
+            $tag->setName('Existing Tag');
+            return $tag;
+        });
+        $this->entityManagerMock->expects($this->never())->method('persist');
+        $this->entityManagerMock->expects($this->never())->method('flush');
+
+        $tagHandler = $this->container->get(TagHandler::class);
+
+        $res = $tagHandler->createTag('Existing Tag');
+
+        $this->assertNull($res);
     }
 
     // === Update Tag Tests ===
