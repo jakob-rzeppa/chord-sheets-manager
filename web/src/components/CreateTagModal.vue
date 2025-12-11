@@ -15,7 +15,7 @@ async function handleSubmit() {
 <template>
     <div class="space-y-6">
         <h2 class="text-2xl font-bold text-center">Create New Tag</h2>
-        <form @submit.prevent="handleSubmit" class="space-y-4">
+        <div @keypress.enter.prevent="handleSubmit" class="space-y-4">
             <div>
                 <label for="tag-name" class="label">
                     <span class="label-text text-base font-semibold">Tag Name</span>
@@ -30,8 +30,8 @@ async function handleSubmit() {
                 />
             </div>
             <div class="flex justify-end gap-2">
-                <button type="submit" class="btn btn-primary">Create Tag</button>
+                <button class="btn btn-primary" @click="handleSubmit">Create Tag</button>
             </div>
-        </form>
+        </div>
     </div>
 </template>
