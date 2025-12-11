@@ -47,7 +47,7 @@ export async function createTag(tag: Omit<Tag, 'id'>): Promise<void> {
         apiCall: () => api.post('v1/tags', payload),
         onSuccess: ({ data }) => {
             if (!data.payload) {
-                tagStore.error = 'Request content is empty';
+                // If there is not payload, but the request was successful, this means it was tried to create a duplicate tag. Do not add the tag again, but proceed, as if everything is fine.
                 return;
             }
 
