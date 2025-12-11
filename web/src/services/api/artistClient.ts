@@ -38,7 +38,7 @@ export async function createArtist(artist: Partial<Artist>): Promise<void> {
         apiCall: () => api.post('v1/artists', artist),
         onSuccess: ({ data }) => {
             if (!data.payload) {
-                artistStore.error = 'Request content is empty';
+                // If there is not payload, but the request was successful, this means it was tried to create a duplicate artist. Do not add the artist again, but proceed, as if everything is fine.
                 return;
             }
 
