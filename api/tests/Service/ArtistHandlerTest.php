@@ -41,6 +41,7 @@ class ArtistHandlerTest extends KernelTestCase
     // === Create Artist Tests ===
     public function testCreateArtist(): void
     {
+        $this->artistRepositoryMock->method('findOneBy')->willReturn(null);
         $this->entityManagerMock->expects($this->once())->method('persist');
         $this->entityManagerMock->expects($this->once())->method('flush');
 
@@ -49,6 +50,23 @@ class ArtistHandlerTest extends KernelTestCase
 
         $this->assertNotNull($artist);
         $this->assertEquals('New Artist', $artist->getName());
+    }
+
+    public function testCreateArtistDuplicateName(): void
+    {
+        $this->artistRepositoryMock->method('findOneBy')->willReturnCallback(function () {
+            $artist = new Artist();
+            $artist->setName('Existing Artist');
+            return $artist;
+        });
+        $this->entityManagerMock->expects($this->never())->method('persist');
+        $this->entityManagerMock->expects($this->never())->method('flush');
+
+        $artistHandler = $this->container->get(ArtistHandler::class);
+
+        $res = $artistHandler->createArtist('Existing Artist');
+
+        $this->assertNull($res);
     }
 
     // === Update Artist Tests ===

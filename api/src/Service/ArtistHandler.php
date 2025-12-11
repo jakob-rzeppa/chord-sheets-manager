@@ -16,8 +16,16 @@ class ArtistHandler
         private SheetHandler $sheetHandler,
     ) {}
 
-    public function createArtist(string $name)
+    /**
+     * @return Artist|null Artist if created, null if an artist with the same name already exists.
+     */
+    public function createArtist(string $name): ?Artist
     {
+        $existingArtist = $this->artistRepository->findOneBy(['name' => $name]);
+        if ($existingArtist !== null) {
+            return null;
+        }
+
         $artist = new Artist();
         $artist->setName($name);
 
