@@ -24,7 +24,7 @@ export const useSheetTransposer = () => {
             onSuccess: (response) => {
                 transposeResponse.value = response.data;
             },
-            apiCall: () => api.post('/sheets/transpose', { content, dir: transposeDir }),
+            apiCall: () => api.post('v1/sheets/transpose', { content, dir: transposeDir }),
         }).then(() => {
             if (transposeError.value) {
                 return;
