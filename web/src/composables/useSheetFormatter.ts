@@ -25,7 +25,7 @@ export const useSheetFormatter = () => {
             onSuccess: (response: AxiosResponse<ApiResponse<FormatSheetDto>>) => {
                 formatResponse.value = response.data.payload ? { payload: response.data.payload } : null;
             },
-            apiCall: () => api.post('/sheets/format', { content }),
+            apiCall: () => api.post('v1/sheets/format', { content }),
         });
     }
 
