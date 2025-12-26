@@ -84,7 +84,7 @@ onMounted(() => {
         <ul
             id="tags-dropdown"
             v-if="showDropdown && filteredTags.length > 0"
-            class="absolute z-50 w-full mt-1 bg-base-100 border border-base-300 rounded-lg shadow-lg max-h-60 overflow-y-auto"
+            class="absolute z-200 w-full mt-1 bg-base-100 border border-base-300 rounded-lg shadow-lg max-h-60 overflow-y-auto"
         >
             <li
                 v-for="(tag, index) in filteredTags"

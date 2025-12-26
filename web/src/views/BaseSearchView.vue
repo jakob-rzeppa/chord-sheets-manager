@@ -44,7 +44,7 @@ const filtersOpen = ref(false);
 
                 <div
                     v-if="$slots.filters"
-                    class="collapse collapse-arrow bg-base-200 rounded-box shadow-md overflow-visible"
+                    class="collapse collapse-arrow bg-base-200 rounded-box shadow-md overflow-visible relative z-50"
                     :class="{ 'collapse-open': filtersOpen, 'collapse-close': !filtersOpen }"
                 >
                     <input type="checkbox" v-model="filtersOpen" class="peer" />
