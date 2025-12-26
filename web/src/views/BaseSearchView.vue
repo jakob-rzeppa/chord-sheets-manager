@@ -44,7 +44,7 @@ const filtersOpen = ref(false);
 
                 <div
                     v-if="$slots.filters"
-                    class="collapse collapse-arrow bg-base-200 rounded-box shadow-md"
+                    class="collapse collapse-arrow bg-base-200 rounded-box shadow-md overflow-visible"
                     :class="{ 'collapse-open': filtersOpen, 'collapse-close': !filtersOpen }"
                 >
                     <input type="checkbox" v-model="filtersOpen" class="peer" />
@@ -52,7 +52,7 @@ const filtersOpen = ref(false);
                         <FilterIcon />
                         Advanced Filters
                     </div>
-                    <div class="collapse-content">
+                    <div class="collapse-content overflow-visible">
                         <div class="flex flex-col gap-4 pt-4">
                             <slot name="filters" />
                         </div>
