@@ -107,14 +107,13 @@ export function useTagSelect(
 
         // Handle Enter key
         if (event.key === 'Enter') {
-            event.preventDefault();
-
             // If dropdown is open and there's a highlighted item, select it
             if (showDropdown.value && highlightedIndex.value >= 0 && filteredTags.value.length > 0) {
+                event.preventDefault();
                 addTag(filteredTags.value[highlightedIndex.value]);
             } else {
-                // Otherwise try to add by exact match
-                addTagByName();
+                // Otherwise, do nothing and propagate the event (e.g., form submission)
+                // This allows adding a tag and then instantly submitting the form with Enter
             }
             return;
         }
