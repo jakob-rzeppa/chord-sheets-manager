@@ -65,7 +65,7 @@ export async function updateArtist(artistId: number, artist: Partial<Omit<Artist
                 return;
             }
 
-            const index = artistStore.artists.findIndex((a) => a.id === artistId);
+            const index = artistStore.artists.findIndex((a) => a.id === data.payload!.id);
             if (index !== -1) {
                 artistStore.artists[index] = data.payload;
             }
@@ -73,7 +73,7 @@ export async function updateArtist(artistId: number, artist: Partial<Omit<Artist
             // Update artist name in sheets list
             const sheetStore = useSheetStore();
             sheetStore.sheetsList.forEach((sheet) => {
-                if (sheet.artist && sheet.artist.id === artistId) {
+                if (sheet.artist && sheet.artist.id === data.payload!.id) {
                     sheet.artist = artistStore.artists[index];
                 }
             });
