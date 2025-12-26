@@ -80,6 +80,7 @@ export function useSearchableSelect<T extends Item>(
         switch (event.key) {
             case 'ArrowDown':
                 event.preventDefault();
+                // Moves the highlight to the next item (capped at the last item)
                 highlightedIndex.value = Math.min(
                     highlightedIndex.value + 1,
                     filteredItems.value.length - 1
@@ -88,14 +89,17 @@ export function useSearchableSelect<T extends Item>(
                 break;
             case 'ArrowUp':
                 event.preventDefault();
+                // Moves the highlight to the previous item (capped at the first item)
                 highlightedIndex.value = Math.max(highlightedIndex.value - 1, 0);
                 scrollToHighlighted();
                 break;
             case 'Tab':
-                if (highlightedIndex.value >= 0) {
-                    event.preventDefault();
-                    selectItem(filteredItems.value[highlightedIndex.value]);
-                }
+                // Same functionality as ArrowDown, but wraps to the first element after the last
+                event.preventDefault();
+                // Moves the highlight to the next item (capped at the last item)
+                const nextHighlitedIndex = highlightedIndex.value + 1;
+                highlightedIndex.value = nextHighlitedIndex >= filteredItems.value.length ? 0 : nextHighlitedIndex;
+                scrollToHighlighted();
                 break;
             case 'Enter':
                 if (highlightedIndex.value >= 0) {
