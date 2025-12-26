@@ -74,14 +74,17 @@ export async function updateTag(tagId: number, tag: Partial<Omit<Tag, 'id'>>): P
         errorRef: toRef(tagStore, 'error'),
         apiCall: () => api.put(`v1/tags/${tagId}`, payload),
         onSuccess: ({ data }) => {
-            if (!data.payload) {
+            if (data.payload === undefined) {
                 tagStore.error = 'Response content is empty';
                 return;
             }
 
-            const index = tagStore.tags.findIndex((t) => t.id === tagId);
+            const index = tagStore.tags.findIndex((t) => t.id === data.payload!.id);
             if (index !== -1) {
-                tagStore.tags[index] = data.payload;
+                tagStore.tags[index] = {
+                    id: data.payload.id,
+                    name: data.payload.name,
+                };
             }
 
             // Update tag reference in sheets list
