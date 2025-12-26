@@ -195,13 +195,24 @@ export async function updateSheet(id: string, fieldsToUpdate: Partial<Omit<Sheet
                 content: data.payload.content,
             };
 
-            // Add to sheetsList as well
-            sheetStore.sheetsList.push({
-                id: data.payload.id,
-                title: data.payload.title,
-                artist: data.payload.artist,
-                tags: data.payload.tags,
-            });
+            // Also update sheetsList entry
+            const index = sheetStore.sheetsList.findIndex((sheet) => sheet.id === data.payload!.id);
+            if (index !== -1) {
+                sheetStore.sheetsList[index] = {
+                    id: data.payload.id,
+                    title: data.payload.title,
+                    artist: data.payload.artist,
+                    tags: data.payload.tags,
+                };
+            } else {
+                // If not found, add it
+                sheetStore.sheetsList.push({
+                    id: data.payload.id,
+                    title: data.payload.title,
+                    artist: data.payload.artist,
+                    tags: data.payload.tags,
+                });
+            }
         },
     });
 }
